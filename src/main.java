@@ -5,8 +5,6 @@ public class main {
 	public static void affiche(int num) throws IOException {
 		String ligne = "";
 		String fichier = "Base"+num+".txt";
-		BufferedReader clavier = new BufferedReader(new InputStreamReader(
-				System.in));
 		//String fichier = "/home/etudiant/Documents/eclipse/Opti_Combin/Data/Base" + num + ".txt";
 
 		BufferedReader ficTexte;
