@@ -2,11 +2,10 @@ import java.io.*;
 
 public class main {
 
-	public static void affiche() throws IOException {
+	public static void affiche(int num) throws IOException {
 		String ligne = "";
-		String fichier = "/home/etudiant/Documents/eclipse/Opti_Combin/Data/Base1.txt";
-		BufferedReader clavier = new BufferedReader(new InputStreamReader(
-				System.in));
+		String fichier = "/home/etudiant/Documents/eclipse/Opti_Combin/Data/Base" + num + ".txt";
+//		String fichier = "/home/etudiant/Documents/eclipse/Opti_Combin/Data/Base1.txt";
 
 		BufferedReader ficTexte;
 		try {
@@ -15,14 +14,15 @@ public class main {
 				throw new FileNotFoundException("Fichier non trouvé: "
 						+ fichier);
 			}
+			System.out.println("Fichier " + num);
 			do {
 				ligne = ficTexte.readLine();
 				if (ligne != null) {
 					System.out.println(ligne);
 				}
-			} while (ficTexte != null);
+			} while (ligne != null);
 			ficTexte.close();
-			System.out.println("\n");
+			System.out.println("Fin du fichier\n");
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage());
 		} catch (IOException e) {
@@ -33,7 +33,9 @@ public class main {
 	
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		affiche();
+		for (int i = 1; i < 26; i++) {
+			affiche(i);
+		}
 	}
 
 }
