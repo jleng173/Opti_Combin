@@ -4,15 +4,16 @@ public class main {
 
 	public static void affiche(int num) throws IOException {
 		String ligne = "";
-		String fichier = "/home/etudiant/Documents/eclipse/Opti_Combin/Data/Base" + num + ".txt";
-//		String fichier = "/home/etudiant/Documents/eclipse/Opti_Combin/Data/Base1.txt";
+		String fichier = "Base"+num+".txt";
+		BufferedReader clavier = new BufferedReader(new InputStreamReader(
+				System.in));
+		//String fichier = "/home/etudiant/Documents/eclipse/Opti_Combin/Data/Base" + num + ".txt";
 
 		BufferedReader ficTexte;
 		try {
-			ficTexte = new BufferedReader(new FileReader(new File(fichier)));
+			ficTexte = new BufferedReader(new FileReader(new File("Data/"+fichier)));
 			if (ficTexte == null) {
-				throw new FileNotFoundException("Fichier non trouvé: "
-						+ fichier);
+				throw new FileNotFoundException("Fichier non trouvé :"+fichier);
 			}
 			System.out.println("Fichier " + num);
 			do {
@@ -33,7 +34,7 @@ public class main {
 	
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		for (int i = 1; i < 26; i++) {
+		for (int i = 1; i < 24; i++) {
 			affiche(i);
 		}
 	}
