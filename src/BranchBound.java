@@ -17,44 +17,55 @@ public class BranchBound {
 	public BranchBound(String fichierEnt, String fichierBdd) {
 		EnsembleEntreprise = initListe(fichierEnt);
 		EnsembleBdd = initListe(fichierBdd);
-		racine = new Feuille(null, 0, null, null);
+		racine = new Feuille(EnsembleEntreprise, new ArrayList<String>(), 0, null, null);
 		coutTotal = 0;
 		majorant = Integer.MAX_VALUE;
 	}
 	
-	public Feuille lectureBdd(Feuille f, String fichier) throws IOException {
+	public void lectureBdd(Feuille f, String fichier) throws IOException {
 		String ligne = "";
 		int cout=0;
-		Feuille feuilleG = new Feuille(f.getEnsembleEntreprise(), f.getCoutTotal(), null, f);
+		boolean trouve=false;
 		BufferedReader ficTexte;
+		ArrayList<String> listeBdd = f.getListeBdd();
+		Feuille feuilleG = new Feuille(f.getEnsembleEntreprise(), f.getListeBdd(), f.getCoutTotal(), null, f);
 		try {
 			ficTexte = new BufferedReader(new FileReader(new File("Data/"+fichier)));
 			if (ficTexte == null) {
 				throw new FileNotFoundException("Fichier non trouvé :"+fichier);
 			}
 			cout = Integer.parseInt(ficTexte.readLine()); //Retourne le cout
+			System.out.println("Cout" + cout);
 			do {
 				ligne = ficTexte.readLine();
 				if (ligne != null) {
-					for(int i=0;i<EnsembleEntreprise.size();i++) {
-						if(ligne.matches(EnsembleEntreprise.get(i)))
+					for(int i=0;i<f.getEnsembleEntreprise().size();i++) {
+						if(ligne.matches(f.getEnsembleEntreprise().get(i)))
 						{
-							EnsembleEntreprise.remove(i);
+							System.out.println("Trouvé");
+							trouve = true;
+							feuilleG.getEnsembleEntreprise().remove(f.getEnsembleEntreprise().get(i));
 						}
 					}
 				}
 			} while (ligne != null);
 			ficTexte.close();
-			EnsembleBdd.remove(0);
-			System.out.println("Fin du fichier\n");
+			//Si les données sont trouvées, on met a jour la listeBdd et le cout 
+			if(trouve) {
+				listeBdd.add(fichier);
+				feuilleG.setCoutTotal(feuilleG.getCoutTotal()+cout);
+				System.out.println("Total" + feuilleG.getCoutTotal());
+			}
+			System.out.println("Fin du fichier2\n");
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage());
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
+		Feuille feuilleD = new Feuille(f.getEnsembleEntreprise(), listeBdd, f.getCoutTotal());
 		f.setGauche(feuilleG);
-		f.setDroite(f);
-		return f;
+		f.setDroite(feuilleD);
+		System.out.println("Resultat " + feuilleG.getCoutTotal());
 	}
 
 	//Initialise la ListeBdd à parcourir et la ListeEntreprise à parcourir
@@ -97,5 +108,25 @@ public class BranchBound {
 			parcoursD(f.getDroite(),fichier);
 		else
 			lectureBdd(f,fichier);
+	}
+
+	public ArrayList<String> getEnsembleEntreprise() {
+		return EnsembleEntreprise;
+	}
+
+	public ArrayList<String> getEnsembleBdd() {
+		return EnsembleBdd;
+	}
+
+	public Feuille getRacine() {
+		return racine;
+	}
+
+	public int getCoutTotal() {
+		return coutTotal;
+	}
+
+	public int getMajorant() {
+		return majorant;
 	}
 }

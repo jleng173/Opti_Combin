@@ -47,6 +47,14 @@ public class main {
 		for (int i = 0 ; i < G.getBasesG().size() ; i++) {
 			System.out.println(G.getBasesG().get(i));
 		}
+		BranchBound B = new BranchBound("Ent2.txt", "ListeBases1.txt");
+		while(!B.getEnsembleBdd().isEmpty()) {
+			B.parcoursD(B.getRacine(), B.getEnsembleBdd().get(0));
+			B.parcoursG(B.getRacine(), B.getEnsembleBdd().get(0));
+			B.getEnsembleBdd().remove(0);
+		}
+//		System.out.println(B.getRacine().getDroite().getCoutTotal());
+//		System.out.println(B.getRacine().getGauche().getCoutTotal());
 	}
 
 }

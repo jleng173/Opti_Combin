@@ -2,15 +2,25 @@ import java.util.ArrayList;
 
 public class Feuille {	
 	ArrayList<String> EnsembleEntreprise;
+	ArrayList<String> ListeBdd;
 	int coutTotal;
 	Feuille Gauche;
 	Feuille Droite;
 	
-	public Feuille(ArrayList<String> ensembleEntreprise, int coutTotal, Feuille gauche, Feuille droite) {
+	public Feuille(ArrayList<String> ensembleEntreprise, ArrayList<String> liste, int coutTotal, Feuille gauche, Feuille droite) {
 		EnsembleEntreprise = ensembleEntreprise;
 		this.coutTotal = coutTotal;
+		ListeBdd = liste;
 		Gauche = gauche;
 		Droite = droite;
+	}
+	
+	public Feuille(ArrayList<String> ensembleEntreprise, ArrayList<String> liste, int coutTotal) {
+		EnsembleEntreprise = ensembleEntreprise;
+		this.coutTotal = coutTotal;
+		ListeBdd = liste;
+		Gauche = null;
+		Droite = null;
 	}
 
 	public int getCoutTotal() {
@@ -43,5 +53,13 @@ public class Feuille {
 
 	public void setEnsembleEntreprise(ArrayList<String> ensembleEntreprise) {
 		EnsembleEntreprise = ensembleEntreprise;
+	}
+
+	public ArrayList<String> getListeBdd() {
+		return ListeBdd;
+	}
+
+	public void setListeBdd(ArrayList<String> listeBdd) {
+		ListeBdd = listeBdd;
 	}
 }
