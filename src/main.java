@@ -38,15 +38,21 @@ public class main {
 	
 	
 	public static void main(String[] args) throws IOException {
+		long debut = System.currentTimeMillis();
 		// TODO Auto-generated method stub
-//		for (int i = 1; i < 24; i++) {
-//			affiche(i);
-//		}
-		Glouton G = new Glouton("Ent2.txt","ListeBases3.txt");
+		String fichierListEnt = "Ent3.txt";
+		String fichierListBases = "ListeBases3.txt";
+		System.out.println("On cherche les entreprises du fichier "+fichierListEnt+" parmis les bases du fichier "+fichierListBases);
+		Glouton G = new Glouton(fichierListEnt,fichierListBases);
 		System.out.println("Prix final :"+G.getPrixFinal());
+		System.out.println("Bases achetées :");
 		for (int i = 0 ; i < G.getBasesG().size() ; i++) {
-			System.out.println(G.getBasesG().get(i));
+			System.out.println("    "+G.getBasesG().get(i));
 		}
+		
+		System.out.println("Temps d'éxécution en milliseconde :");
+		System.out.println(System.currentTimeMillis()-debut);
+		
 		BranchBound B = new BranchBound("Ent2.txt", "ListeBases1.txt");
 		while(!B.getEnsembleBdd().isEmpty()) {
 			B.parcoursD(B.getRacine(), B.getEnsembleBdd().get(0));
@@ -55,6 +61,8 @@ public class main {
 		}
 //		System.out.println(B.getRacine().getDroite().getCoutTotal());
 //		System.out.println(B.getRacine().getGauche().getCoutTotal());
+		
+
 	}
 
 }
