@@ -54,15 +54,21 @@ public class main {
 		System.out.println(System.currentTimeMillis()-debut);
 		
 		
-		BranchBound B = new BranchBound("Ent3.txt", "ListeBases3.txt");
+		BranchBound B = new BranchBound("Ent2.txt", "ListeBases3.txt");
+		
+		B.parcoursD(B.getRacine(), B.getEnsembleBdd().get(0));
+		//B.parcoursG(B.getRacine(), B.getEnsembleBdd().get(0));
+		
 		while(!B.getEnsembleBdd().isEmpty()) {
 //			B.lectureBdd(B.getRacine(), B.getEnsembleBdd().get(0));
 			B.parcoursD(B.getRacine(), B.getEnsembleBdd().get(0));
 			B.parcoursG(B.getRacine(), B.getEnsembleBdd().get(0));
 			B.getEnsembleBdd().remove(0);
+			
 		}
-//		System.out.println(B.getRacine().getDroite().getCoutTotal());
-//		System.out.println(B.getRacine().getGauche().getCoutTotal());
+		//System.out.println(B.getRacine());
+		System.out.println(B.getCoutTotal());
+		System.out.println(B.nb_trouve);
 		
 
 	}
