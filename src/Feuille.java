@@ -6,6 +6,7 @@ public class Feuille {
 	int coutTotal;
 	Feuille Gauche;
 	Feuille Droite;
+	public int profondeur;
 	
 	public Feuille(ArrayList<String> ensembleEntreprise, ArrayList<String> liste, int coutTotal, Feuille gauche, Feuille droite) {
 		EnsembleEntreprise = ensembleEntreprise;

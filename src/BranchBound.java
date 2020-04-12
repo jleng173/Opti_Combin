@@ -13,6 +13,7 @@ public class BranchBound {
 	int coutTotal;
 	int majorant;
 	int minorant;
+	public int nb_trouve = 0;
 	
 	public BranchBound(String fichierEnt, String fichierBdd) {
 		EnsembleEntreprise = initListe(fichierEnt);
@@ -52,9 +53,10 @@ public class BranchBound {
 		String ligne = "";
 		int cout=0;
 		boolean trouve=false;
+
 		BufferedReader ficTexte;
 		ArrayList<String> listeBdd = f.getListeBdd();
-		Feuille feuilleG = new Feuille(f.getEnsembleEntreprise(), f.getListeBdd(), f.getCoutTotal(), null, f);
+		Feuille feuilleG = new Feuille(f.getEnsembleEntreprise(), f.getListeBdd(), f.getCoutTotal(), null, null);
 		
 		try {
 			ficTexte = new BufferedReader(new FileReader(new File("Data/"+fichier)));
@@ -62,16 +64,17 @@ public class BranchBound {
 				throw new FileNotFoundException("Fichier non trouvé :"+fichier);
 			}
 			cout = Integer.parseInt(ficTexte.readLine()); //Retourne le cout
-			System.out.println("Cout" + cout);
+			//System.out.println("Cout" + cout);
 			do {
 				ligne = ficTexte.readLine();
 				if (ligne != null) {
 					for(int i=0;i<f.getEnsembleEntreprise().size();i++) {
 						if(ligne.matches(f.getEnsembleEntreprise().get(i)))
 						{
-							System.out.println("Trouvé");
+							//System.out.println("Trouvé");
 							trouve = true;
 							feuilleG.getEnsembleEntreprise().remove(f.getEnsembleEntreprise().get(i));
+							
 						}
 					}
 				}
@@ -79,18 +82,19 @@ public class BranchBound {
 			ficTexte.close();
 			//Si les données sont trouvées, on met a jour la listeBdd et le cout 
 			if(trouve) {
+				nb_trouve ++;
 				listeBdd.add(fichier);
 				feuilleG.setCoutTotal(feuilleG.getCoutTotal()+cout);
-				System.out.println("Total" + feuilleG.getCoutTotal());
+				System.out.println("Total" + feuilleG.getCoutTotal() + "  "+ fichier);
 			}
-			System.out.println("Fin du fichier2 " + fichier + "\n");
+			//System.out.println("Fin du fichier2 " + fichier + "\n");
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage());
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
 		f.setGauche(feuilleG);
-		System.out.println("Resultat " + feuilleG.getCoutTotal());
+		//System.out.println("Resultat " + feuilleG.getCoutTotal());
 	}
 	
 	public void lectureBddD(Feuille f, String fichier) throws IOException {
