@@ -60,14 +60,11 @@ public class main {
 		//B.parcoursG(B.getRacine(), B.getEnsembleBdd().get(0));
 		
 		while(!B.getEnsembleBdd().isEmpty()) {
-//			B.lectureBdd(B.getRacine(), B.getEnsembleBdd().get(0));
 			B.parcoursD(B.getRacine(), B.getEnsembleBdd().get(0));
 			B.parcoursG(B.getRacine(), B.getEnsembleBdd().get(0));
 			B.getEnsembleBdd().remove(0);
 			
 		}
-		//System.out.println(B.getRacine());
-		System.out.println(B.getCoutTotal());
 		System.out.println(B.nb_trouve);
 		
 

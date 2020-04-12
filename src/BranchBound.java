@@ -17,7 +17,7 @@ public class BranchBound {
 	
 	public BranchBound(String fichierEnt, String fichierBdd) {
 		EnsembleEntreprise = initListe(fichierEnt);
-		EnsembleBdd = initListe(fichierBdd);
+		EnsembleBdd = initListeBDD(fichierBdd);
 		racine = new Feuille(EnsembleEntreprise, new ArrayList<String>(), 0, null, null);
 		coutTotal = 0;
 		majorant = Integer.MAX_VALUE;
@@ -64,7 +64,6 @@ public class BranchBound {
 				throw new FileNotFoundException("Fichier non trouvé :"+fichier);
 			}
 			cout = Integer.parseInt(ficTexte.readLine()); //Retourne le cout
-			//System.out.println("Cout" + cout);
 			do {
 				ligne = ficTexte.readLine();
 				if (ligne != null) {
@@ -108,6 +107,45 @@ public class BranchBound {
 	}
 
 	//Initialise la ListeBdd à parcourir et la ListeEntreprise à parcourir
+	public ArrayList<String> initListeBDD(String fichier) {
+		ArrayList<String> listeInit = new ArrayList<String>();
+		String ligne = "";
+		int nb_bases = 0;
+		BufferedReader ficLB;
+		try {
+			do {
+			BufferedReader ficListeBases = new BufferedReader(new FileReader(new File("Data/"+fichier)));
+			int prix_min = 1000;
+			nb_bases = Integer.parseInt(ficListeBases.readLine());
+			String nomBase_prixMin = "";	
+							
+			for(int i = 0 ; i < nb_bases ; i++) {
+				String nomBase = ficListeBases.readLine();
+				if (!listeInit.contains(nomBase)) {
+					BufferedReader ficBase = new BufferedReader(new FileReader(new File("Data/"+nomBase)));
+					int coutBase = Integer.parseInt(ficBase.readLine());
+					if( coutBase < prix_min) {
+						prix_min = coutBase;
+						nomBase_prixMin = nomBase;
+					}
+					ficBase.close();	
+				}
+			}
+			
+			listeInit.add(nomBase_prixMin);
+			ficListeBases.close();
+			
+			}while(listeInit.size() != nb_bases);
+			
+			System.out.println("Fin du fichier\n");
+		} catch (FileNotFoundException e) {
+			System.out.println(e.getMessage());
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
+		return listeInit;
+	}
+	
 	public ArrayList<String> initListe(String fichier) {
 		ArrayList<String> listeInit = new ArrayList<String>();
 		String ligne = "";
