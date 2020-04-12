@@ -22,12 +22,12 @@ public class BranchBound {
 		majorant = Integer.MAX_VALUE;
 	}
 	
-	public void lectureBdd(Feuille f, String fichier) throws IOException {
+	public void lectureBdd(Feuille f, String fichier, ArrayList<String> liste) throws IOException {
 		String ligne = "";
 		int cout=0;
 		boolean trouve=false;
 		BufferedReader ficTexte;
-		ArrayList<String> listeBdd = f.getListeBdd();
+		ArrayList<String> listeBdd = liste;
 		Feuille feuilleG = new Feuille(f.getEnsembleEntreprise(), f.getListeBdd(), f.getCoutTotal(), null, f);
 		try {
 			ficTexte = new BufferedReader(new FileReader(new File("Data/"+fichier)));
@@ -56,7 +56,7 @@ public class BranchBound {
 				feuilleG.setCoutTotal(feuilleG.getCoutTotal()+cout);
 				System.out.println("Total" + feuilleG.getCoutTotal());
 			}
-			System.out.println("Fin du fichier2\n");
+			System.out.println("Fin du fichier2 " + fichier + "\n");
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage());
 		} catch (IOException e) {
@@ -96,19 +96,34 @@ public class BranchBound {
 		return listeInit;
 	}
 	
-	public void parcoursG(Feuille f, String fichier) throws IOException {
-		if(f.getGauche()!=null)
-			parcoursG(f.getGauche(),fichier);
+	public void parcoursG(Feuille f, String fichier, ArrayList<String> Ens) throws IOException {
+		if(f.getGauche()!=null) {
+			parcoursG(f.getGauche(),fichier, f.getListeBdd());
+			parcoursD(f.getGauche(), fichier, f.getListeBdd());
+		}
 		else
-			lectureBdd(f,fichier);
+			lectureBdd(f,fichier, f.getListeBdd());
 	}
 	
-	public void parcoursD(Feuille f, String fichier) throws IOException {
+	public void parcoursD(Feuille f, String fichier, ArrayList<String> Ens) throws IOException {
 		if(f.getDroite()!=null)
-			parcoursD(f.getDroite(),fichier);
+		{
+			parcoursD(f.getDroite(),fichier, f.getListeBdd());
+			parcoursG(f.getDroite(),fichier, f.getListeBdd());
+		}
 		else
-			lectureBdd(f,fichier);
+			lectureBdd(f,fichier, f.getListeBdd());
 	}
+	
+//	public void parcours(Feuille f, String fichier, ArrayList<String> Ens) throws IOException {
+//	if(f!=null)
+//	{
+//		parcours(f.getGauche(),fichier, f.getListeBdd());
+//		parcours(f.getDroite(),fichier, f.getListeBdd());
+//	}
+//	else
+//		lectureBdd(f,fichier, f.getListeBdd());
+//	}
 
 	public ArrayList<String> getEnsembleEntreprise() {
 		return EnsembleEntreprise;
@@ -129,4 +144,6 @@ public class BranchBound {
 	public int getMajorant() {
 		return majorant;
 	}
+	
+//	public void moyenne
 }
