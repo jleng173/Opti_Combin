@@ -53,6 +53,7 @@ public class main {
 		System.out.println("Temps d'éxécution en milliseconde :");
 		System.out.println(System.currentTimeMillis()-debut);
 		
+		
 		BranchBound B = new BranchBound("Ent2.txt", "ListeBases1.txt");
 		while(!B.getEnsembleBdd().isEmpty()) {
 			B.parcoursD(B.getRacine(), B.getEnsembleBdd().get(0));
