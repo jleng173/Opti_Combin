@@ -22,13 +22,40 @@ public class BranchBound {
 		majorant = Integer.MAX_VALUE;
 	}
 	
-	public void lectureBdd(Feuille f, String fichier, ArrayList<String> liste) throws IOException {
+	public double boundMoyenne(String fichierListBase) {
+		BufferedReader ficListeBases;
+		try {
+			ficListeBases = new BufferedReader(new FileReader(new File("Data/"+fichierListBase)));
+
+			double nb_bases = Integer.parseInt(ficListeBases.readLine());
+			String nomBase_prixMin = "";
+			double prixTotalbases = 0;
+							
+			for(int i = 0 ; i < nb_bases ; i++) {
+				String nomBase = ficListeBases.readLine();
+				BufferedReader ficBase = new BufferedReader(new FileReader(new File("Data/"+nomBase)));
+				int coutBase = Integer.parseInt(ficBase.readLine());
+				prixTotalbases += coutBase;
+				ficBase.close();
+			}
+			ficListeBases.close();
+			
+			return prixTotalbases/nb_bases;
+		
+		} catch (NumberFormatException | IOException e) {
+			e.printStackTrace();
+		}
+		return 0.0;
+	}
+	
+	public void lectureBdd(Feuille f, String fichier) throws IOException {
 		String ligne = "";
 		int cout=0;
 		boolean trouve=false;
 		BufferedReader ficTexte;
 		ArrayList<String> listeBdd = liste;
 		Feuille feuilleG = new Feuille(f.getEnsembleEntreprise(), f.getListeBdd(), f.getCoutTotal(), null, f);
+		
 		try {
 			ficTexte = new BufferedReader(new FileReader(new File("Data/"+fichier)));
 			if (ficTexte == null) {
