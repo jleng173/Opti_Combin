@@ -48,12 +48,12 @@ public class BranchBound {
 		return 0.0;
 	}
 	
-	public void lectureBdd(Feuille f, String fichier) throws IOException {
+	public void lectureBddG(Feuille f, String fichier) throws IOException {
 		String ligne = "";
 		int cout=0;
 		boolean trouve=false;
 		BufferedReader ficTexte;
-		ArrayList<String> listeBdd = liste;
+		ArrayList<String> listeBdd = f.getListeBdd();
 		Feuille feuilleG = new Feuille(f.getEnsembleEntreprise(), f.getListeBdd(), f.getCoutTotal(), null, f);
 		
 		try {
@@ -89,10 +89,18 @@ public class BranchBound {
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
-		Feuille feuilleD = new Feuille(f.getEnsembleEntreprise(), listeBdd, f.getCoutTotal());
 		f.setGauche(feuilleG);
-		f.setDroite(feuilleD);
 		System.out.println("Resultat " + feuilleG.getCoutTotal());
+	}
+	
+	public void lectureBddD(Feuille f, String fichier) throws IOException {
+		String ligne = "";
+		int cout=0;
+		boolean trouve=false;
+		BufferedReader ficTexte;
+		ArrayList<String> listeBdd = f.getListeBdd();
+		Feuille feuilleD = new Feuille(f.getEnsembleEntreprise(), listeBdd, f.getCoutTotal());
+		f.setDroite(feuilleD);
 	}
 
 	//Initialise la ListeBdd à parcourir et la ListeEntreprise à parcourir
@@ -123,23 +131,23 @@ public class BranchBound {
 		return listeInit;
 	}
 	
-	public void parcoursG(Feuille f, String fichier, ArrayList<String> Ens) throws IOException {
+	public void parcoursG(Feuille f, String fichier) throws IOException {
 		if(f.getGauche()!=null) {
-			parcoursG(f.getGauche(),fichier, f.getListeBdd());
-			parcoursD(f.getGauche(), fichier, f.getListeBdd());
+			parcoursG(f.getGauche(),fichier);
+			parcoursD(f.getGauche(), fichier);
 		}
 		else
-			lectureBdd(f,fichier, f.getListeBdd());
+			lectureBddG(f,fichier);
 	}
 	
-	public void parcoursD(Feuille f, String fichier, ArrayList<String> Ens) throws IOException {
+	public void parcoursD(Feuille f, String fichier) throws IOException {
 		if(f.getDroite()!=null)
 		{
-			parcoursD(f.getDroite(),fichier, f.getListeBdd());
-			parcoursG(f.getDroite(),fichier, f.getListeBdd());
+			parcoursG(f.getDroite(),fichier);
+			parcoursD(f.getDroite(),fichier);
 		}
 		else
-			lectureBdd(f,fichier, f.getListeBdd());
+			lectureBddD(f,fichier);
 	}
 	
 //	public void parcours(Feuille f, String fichier, ArrayList<String> Ens) throws IOException {

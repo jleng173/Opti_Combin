@@ -56,8 +56,9 @@ public class main {
 		
 		BranchBound B = new BranchBound("Ent2.txt", "ListeBases1.txt");
 //		while(!B.getEnsembleBdd().isEmpty()) {
-			B.parcoursD(B.getRacine(), B.getEnsembleBdd().get(0),B.getRacine().getListeBdd());
-			B.parcoursG(B.getRacine(), B.getEnsembleBdd().get(0),B.getRacine().getListeBdd());
+//			B.lectureBdd(B.getRacine(), B.getEnsembleBdd().get(0));
+			B.parcoursD(B.getRacine(), B.getEnsembleBdd().get(0));
+			B.parcoursG(B.getRacine(), B.getEnsembleBdd().get(0));
 //		}
 //		System.out.println(B.getRacine().getDroite().getCoutTotal());
 //		System.out.println(B.getRacine().getGauche().getCoutTotal());
