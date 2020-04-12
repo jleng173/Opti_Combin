@@ -40,8 +40,8 @@ public class main {
 	public static void main(String[] args) throws IOException {
 		long debut = System.currentTimeMillis();
 		// TODO Auto-generated method stub
-		String fichierListEnt = "Ent1.txt";
-		String fichierListBases = "ListeBases1.txt";
+		String fichierListEnt = "Ent3.txt";
+		String fichierListBases = "ListeBases3.txt";
 		System.out.println("On cherche les entreprises du fichier "+fichierListEnt+" parmis les bases du fichier "+fichierListBases);
 		Glouton G = new Glouton(fichierListEnt,fichierListBases);
 		System.out.println("Prix final :"+G.getPrixFinal());
