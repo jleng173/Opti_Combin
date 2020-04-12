@@ -40,8 +40,8 @@ public class main {
 	public static void main(String[] args) throws IOException {
 		long debut = System.currentTimeMillis();
 		// TODO Auto-generated method stub
-		String fichierListEnt = "Ent2.txt";
-		String fichierListBases = "ListeBases3.txt";
+		String fichierListEnt = "Ent1.txt";
+		String fichierListBases = "ListeBases1.txt";
 		System.out.println("On cherche les entreprises du fichier "+fichierListEnt+" parmis les bases du fichier "+fichierListBases);
 		Glouton G = new Glouton(fichierListEnt,fichierListBases);
 		System.out.println("Prix final :"+G.getPrixFinal());
@@ -53,22 +53,21 @@ public class main {
 		System.out.println("Temps d'éxécution en milliseconde :");
 		System.out.println(System.currentTimeMillis()-debut);
 		
-		
-		BranchBound B = new BranchBound("Ent2.txt", "ListeBases3.txt");
+		System.out.println();
+		long debutBandD = System.currentTimeMillis();
+		BranchBound B = new BranchBound(fichierListEnt, fichierListBases);
 		
 		B.parcoursD(B.getRacine(), B.getEnsembleBdd().get(0));
 		//B.parcoursG(B.getRacine(), B.getEnsembleBdd().get(0));
 		
 		while(!B.getEnsembleBdd().isEmpty()) {
-//			B.lectureBdd(B.getRacine(), B.getEnsembleBdd().get(0));
 			B.parcoursD(B.getRacine(), B.getEnsembleBdd().get(0));
 			B.parcoursG(B.getRacine(), B.getEnsembleBdd().get(0));
 			B.getEnsembleBdd().remove(0);
-			
 		}
-		//System.out.println(B.getRacine());
-		System.out.println(B.getCoutTotal());
-		System.out.println(B.nb_trouve);
+		System.out.println();
+		System.out.println("Temps d'éxécution en milliseconde :");
+		System.out.println(System.currentTimeMillis()-debutBandD);
 		
 
 	}
