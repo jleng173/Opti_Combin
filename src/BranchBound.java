@@ -137,7 +137,7 @@ public class BranchBound {
 			
 			}while(listeInit.size() != nb_bases);
 			
-			System.out.println("Fin du fichier\n");
+			//System.out.println("Fin du fichier\n");
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage());
 		} catch (IOException e) {
@@ -164,7 +164,7 @@ public class BranchBound {
 				}
 			} while (ligne != null);
 			ficTexte.close();
-			System.out.println("Fin du fichier\n");
+	//		System.out.println("Fin du fichier\n");
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage());
 		} catch (IOException e) {
