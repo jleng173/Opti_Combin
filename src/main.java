@@ -37,8 +37,8 @@ public class main {
 	public static void main(String[] args) throws IOException {
 		long debut = System.currentTimeMillis();
 		// TODO Auto-generated method stub
-		String fichierListEnt = "Ent1.txt";
-		String fichierListBases = "ListeBases2.txt";
+		String fichierListEnt = "Ent3.txt";
+		String fichierListBases = "ListeBases1.txt";
 		System.out.println("On cherche les entreprises du fichier "+fichierListEnt+" parmis les bases du fichier "+fichierListBases);
 		Glouton G = new Glouton(fichierListEnt,fichierListBases);
 		System.out.println("Prix final :"+G.getPrixFinal());
@@ -65,7 +65,7 @@ public class main {
 		int x = Integer.MAX_VALUE;
 		Feuille f=null;
 		for (Feuille feuille : B.getListeCout()) {
-			System.out.println("Feuille " + feuille.getListeBdd() + " " + feuille.getCoutTotal());
+//			System.out.println("Feuille " + feuille.getListeBdd() + " " + feuille.getCoutTotal());
 			if ((feuille.getCoutTotal()<x) && (feuille.getCoutTotal() !=0))
 			{
 				x=feuille.getCoutTotal();
