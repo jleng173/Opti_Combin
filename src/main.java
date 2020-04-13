@@ -1,10 +1,7 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class main {
 	
-	private static int prix;
 
 	public static void affiche(int num) throws IOException {
 		String ligne = "";
@@ -59,12 +56,22 @@ public class main {
 		
 		B.parcoursD(B.getRacine(), B.getEnsembleBdd().get(0));
 		//B.parcoursG(B.getRacine(), B.getEnsembleBdd().get(0));
-		
 		while(!B.getEnsembleBdd().isEmpty()) {
 			B.parcoursD(B.getRacine(), B.getEnsembleBdd().get(0));
 			B.parcoursG(B.getRacine(), B.getEnsembleBdd().get(0));
 			B.getEnsembleBdd().remove(0);
 		}
+		B.parcourssuffixe(B.getRacine());
+		int x = Integer.MAX_VALUE;
+		Feuille f=null;
+		for (Feuille feuille : B.getListeCout()) {
+			if ((feuille.getCoutTotal()<x) && (feuille.getCoutTotal() !=0))
+			{
+				x=feuille.getCoutTotal();
+				f=feuille;
+			}
+		}
+		System.out.println("Meilleur cout " + x + f.getListeBdd());
 		System.out.println();
 		System.out.println("Temps d'éxécution en milliseconde :");
 		System.out.println(System.currentTimeMillis()-debutBandD);

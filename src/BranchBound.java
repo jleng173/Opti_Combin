@@ -3,21 +3,20 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class BranchBound {
 	ArrayList<String> EnsembleEntreprise;
 	ArrayList<String> EnsembleBdd;
+	ArrayList<Feuille> listeCout;
 	Feuille racine;
-	int coutTotal;
 	public int nb_trouve = 0;
 	
 	public BranchBound(String fichierEnt, String fichierBdd) {
 		EnsembleEntreprise = initListe(fichierEnt);
-		EnsembleBdd = initListeBDD(fichierBdd);
+		EnsembleBdd = initListe(fichierBdd);
 		racine = new Feuille(EnsembleEntreprise, new ArrayList<String>(), 0, null, null);
-		coutTotal = 0;
+		listeCout = new ArrayList<Feuille>();
 	}
 	
 	public double boundMoyenne(String fichierListBase) {
@@ -26,7 +25,6 @@ public class BranchBound {
 			ficListeBases = new BufferedReader(new FileReader(new File("Data/"+fichierListBase)));
 
 			double nb_bases = Integer.parseInt(ficListeBases.readLine());
-			String nomBase_prixMin = "";
 			double prixTotalbases = 0;
 							
 			for(int i = 0 ; i < nb_bases ; i++) {
@@ -115,9 +113,7 @@ public class BranchBound {
 	//Initialise la ListeBdd à parcourir et la ListeEntreprise à parcourir
 	public ArrayList<String> initListeBDD(String fichier) {
 		ArrayList<String> listeInit = new ArrayList<String>();
-		String ligne = "";
 		int nb_bases = 0;
-		BufferedReader ficLB;
 		try {
 			do {
 			BufferedReader ficListeBases = new BufferedReader(new FileReader(new File("Data/"+fichier)));
@@ -216,8 +212,17 @@ public class BranchBound {
 		return racine;
 	}
 
-	public int getCoutTotal() {
-		return coutTotal;
+	public void parcourssuffixe(Feuille f) {
+		if(f.getGauche()!=null)
+			parcourssuffixe(f.getGauche());
+		if(f.getDroite()!=null)
+			parcourssuffixe(f.getDroite());
+		if(f.getEnsembleEntreprise().isEmpty())
+			listeCout.add(f);
+	}
+	
+	public ArrayList<Feuille> getListeCout() {
+		return listeCout;
 	}
 	
 //	public void moyenne
