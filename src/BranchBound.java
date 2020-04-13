@@ -44,7 +44,11 @@ public class BranchBound {
 		return 0.0;
 	}
 	
-	
+	/*
+	 * Création d'un noeud gauche et recherche de l'entreprise dans la BDD
+	 * Si on trouve une entreprise, on la retire de la liste d'entreprises à chercher et
+	 * on ajoute le cout du fichier au cout total
+	 */
 	public void creationNoeudG(Feuille f, String fichier) throws IOException {
 		String ligne = "";
 		int cout=0;
@@ -210,11 +214,11 @@ public class BranchBound {
 		return racine;
 	}
 
-	public void parcourssuffixe(Feuille f) {
+	public void parcoursSuffixe(Feuille f) {
 		if(f.getGauche()!=null)
-			parcourssuffixe(f.getGauche());
+			parcoursSuffixe(f.getGauche());
 		if(f.getDroite()!=null)
-			parcourssuffixe(f.getDroite());
+			parcoursSuffixe(f.getDroite());
 		if(f.getEnsembleEntreprise().isEmpty())
 			listeCout.add(f);
 	}

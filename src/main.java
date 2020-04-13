@@ -61,11 +61,11 @@ public class main {
 			B.parcoursG(B.getRacine(), B.getEnsembleBdd().get(0));
 			B.getEnsembleBdd().remove(0);
 		}
-		B.parcourssuffixe(B.getRacine());
+		B.parcoursSuffixe(B.getRacine());
 		int x = Integer.MAX_VALUE;
 		Feuille f=null;
 		for (Feuille feuille : B.getListeCout()) {
-//			System.out.println("Feuille " + feuille.getListeBdd() + " " + feuille.getCoutTotal());
+			System.out.println("Feuille " + feuille.getListeBdd() + " " + feuille.getCoutTotal());
 			if ((feuille.getCoutTotal()<x) && (feuille.getCoutTotal() !=0))
 			{
 				x=feuille.getCoutTotal();
