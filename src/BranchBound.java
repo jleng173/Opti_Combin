@@ -14,7 +14,7 @@ public class BranchBound {
 	
 	public BranchBound(String fichierEnt, String fichierBdd) {
 		EnsembleEntreprise = initListe(fichierEnt);
-		EnsembleBdd = initListe(fichierBdd);
+		EnsembleBdd = initListeBDD(fichierBdd);
 		racine = new Feuille(EnsembleEntreprise, new ArrayList<String>(), 0, null, null);
 		listeCout = new ArrayList<Feuille>();
 	}
@@ -44,7 +44,8 @@ public class BranchBound {
 		return 0.0;
 	}
 	
-	public void lectureBddG(Feuille f, String fichier) throws IOException {
+	
+	public void creationNoeudG(Feuille f, String fichier) throws IOException {
 		String ligne = "";
 		int cout=0;
 		boolean trouve=false;
@@ -70,7 +71,6 @@ public class BranchBound {
 					for(int i=0;i<f.getEnsembleEntreprise().size();i++) {
 						if(ligne.matches(f.getEnsembleEntreprise().get(i)))
 						{
-							//System.out.println("Trouvé");
 							trouve = true;
 							feuilleG.getEnsembleEntreprise().remove(f.getEnsembleEntreprise().get(i));
 							
@@ -86,19 +86,19 @@ public class BranchBound {
 				feuilleG.setListeBdd(listeBdd);
 				feuilleG.setCoutTotal(feuilleG.getCoutTotal()+cout);
 				
-//				System.out.println("Total" + feuilleG.getCoutTotal() + "  "+ fichier);
 			}
-//			System.out.println("Fin du fichier2 " + fichier + "\n");
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage());
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
 		f.setGauche(feuilleG);
-//		System.out.println("Resultat " + feuilleG.getCoutTotal() + feuilleG.getListeBdd());
 	}
 	
-	public void lectureBddD(Feuille f, String fichier) throws IOException {
+	/* Création d'une feuille droite identique à la feuille mère
+	 * 
+	 */
+	public void creationNoeudD(Feuille f, String fichier) throws IOException {
 		ArrayList<String> listeBdd = new ArrayList<String>();
 		for (String st : f.getListeBdd()) {
 			listeBdd.add(st);
@@ -139,7 +139,6 @@ public class BranchBound {
 			
 			}while(listeInit.size() != nb_bases);
 			
-			//System.out.println("Fin du fichier\n");
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage());
 		} catch (IOException e) {
@@ -148,6 +147,9 @@ public class BranchBound {
 		return listeInit;
 	}
 	
+	/*Lecture des fichiers de type ListeBases et initialisation des listes de BDD à parcourir
+	 *Idem pour les fichiers d'entreprises et initialisation des listes d'entreprises à retrouver
+	 * */
 	public ArrayList<String> initListe(String fichier) {
 		ArrayList<String> listeInit = new ArrayList<String>();
 		String ligne = "";
@@ -166,7 +168,6 @@ public class BranchBound {
 				}
 			} while (ligne != null);
 			ficTexte.close();
-	//		System.out.println("Fin du fichier\n");
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage());
 		} catch (IOException e) {
@@ -175,6 +176,7 @@ public class BranchBound {
 		return listeInit;
 	}
 	
+	//Parcours récursif des différentes branches de l'arbre et ajout d'une feuille si toutes les entreprises n'ont pas été parcourues
 	public void parcoursG(Feuille f, String fichier) throws IOException {
 		if(f.getGauche()!=null) {
 			parcoursG(f.getGauche(),fichier);
@@ -182,9 +184,7 @@ public class BranchBound {
 		}
 		else
 			if(!f.getEnsembleEntreprise().isEmpty())
-				lectureBddG(f,fichier);
-			else
-				System.out.println("Fini " + f.getListeBdd() + " " + f.getCoutTotal());
+				creationNoeudG(f,fichier);
 	}
 	
 	public void parcoursD(Feuille f, String fichier) throws IOException {
@@ -195,9 +195,7 @@ public class BranchBound {
 		}
 		else
 			if(!f.getEnsembleEntreprise().isEmpty())
-				lectureBddD(f,fichier);
-			else
-				System.out.println("Fini " + f.getListeBdd() + " " + f.getCoutTotal() + " " + f.getEnsembleEntreprise().size());
+				creationNoeudD(f,fichier);
 	}
 
 	public ArrayList<String> getEnsembleEntreprise() {
@@ -225,5 +223,4 @@ public class BranchBound {
 		return listeCout;
 	}
 	
-//	public void moyenne
 }
