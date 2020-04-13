@@ -28,7 +28,6 @@ public class Glouton {
 			int nb_entreprise = Integer.parseInt(ficListeEntreprise.readLine());
 			List <String> Entreprises = new ArrayList<>();
 			for (int i = 0 ; i < nb_entreprise; i++) {
-				//System.out.println();
 				Entreprises.add(ficListeEntreprise.readLine().toString());
 			}
 			ficListeEntreprise.close();
@@ -44,6 +43,7 @@ public class Glouton {
 					if (!Bases.contains(nomBase)) {
 						BufferedReader ficBase = new BufferedReader(new FileReader(new File("Data/"+nomBase)));
 						int coutBase = Integer.parseInt(ficBase.readLine());
+						//Heuristique -> choix de la base la moins chère
 						if( coutBase < prix_min) {
 							prix_min = coutBase;
 							nomBase_prixMin = nomBase;
